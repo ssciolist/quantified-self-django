@@ -1,2 +1,9 @@
 Django==2.0.7
+pbr==4.0.4
+psycopg2==2.7.5
 pytz==2018.5
+six==1.11.0
+stevedore==1.28.0
+virtualenv==16.0.0
+virtualenv-clone==0.3.0
+virtualenvwrapper==4.8.2

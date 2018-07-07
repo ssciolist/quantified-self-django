@@ -1,8 +1,12 @@
 from django.shortcuts import render
-
-# Create your views here.
 from django.http import HttpResponse
 
+# imports for jsonification
+from django.http import JsonResponse
+from django.core import serializers
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+from qs_app.models import Food
+
+def food_index(request):
+    foods = list(Food.objects.all().values('id', 'name', 'calories'))
+    return JsonResponse(foods, safe=False)

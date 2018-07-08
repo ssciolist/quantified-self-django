@@ -27,8 +27,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['fierce-mountain-30405.herokuapp.com', 'localhost']
-CORS_ORIGIN_ALLOW_ALL = True
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 

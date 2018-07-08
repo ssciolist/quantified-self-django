@@ -10,6 +10,9 @@ import json
 # import to allow some requests without CSRF protection
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
+# import for error handling
+from django.shortcuts import get_object_or_404
+
 from qs_app.models import Food
 
 @csrf_exempt
@@ -19,22 +22,30 @@ def food_index(request):
         return JsonResponse(foods, safe=False)
     elif request.method == 'POST':
         try:
-            food_params = json.loads(request.body)['food']
+            food_attrs = json.loads(request.body)['food']
             food = Food(name = food_params['name'], calories = food_params['calories'])
             food.save()
             return JsonResponse({'id':food.id, 'name':food.name, 'calories':food.calories})
         except:
             return HttpResponse('An error occurred. No food created', status=400)
 
-
+@csrf_exempt
 def food_show(request, food_id):
     if request.method == 'GET':
-        food = model_to_dict(Food.objects.get(pk=food_id))
+        food = model_to_dict(get_object_or_404(Food, pk=food_id))
         return JsonResponse(food, safe=False)
     elif request.method == 'PUT' or request.method == 'PATCH':
         try:
-            return HttpResponse('placeholder')
+            food = get_object_or_404(Food, pk=food_id)
+
+            food.name = json.loads(request.body)['food']['name']
+            food.calories = json.loads(request.body)['food']['calories']
+            food.save()
+
+            return JsonResponse({'id':food.id, 'name':food.name, 'calories':food.calories})
         except:
-            return HttpResponse('placeholder')
+            return HttpResponse('An error occurred. No food created', status=400)
     elif request.method == 'DELETE':
-        return HttpResponse('placeholder')
+        food = get_object_or_404(Food, pk=food_id)
+        food.delete()
+        return HttpResponse(status=204)

@@ -29,6 +29,12 @@ class FoodViewsTestClass(TestCase):
         self.assertEqual(json.loads(response.content)['name'], "Croissant")
         self.assertEqual(json.loads(response.content)['calories'], 400)
 
+    def test_invalid_food_show(self):
+        response = client.get('/api/v1/foods/999')
+
+        self.assertEqual(response.status_code, 404)
+
+
     # def test_valid_food_post(self):
     #     payload = { "food": { "name": "Tomato Pound Cake", "calories": "900"} }
     #

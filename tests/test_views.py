@@ -21,3 +21,26 @@ class FoodViewsTestClass(TestCase):
         self.assertEqual(json.loads(response.content)[0]['calories'], 400)
         self.assertEqual(json.loads(response.content)[1]['name'], "Salad")
         self.assertEqual(json.loads(response.content)[1]['calories'], 300)
+
+    def test_valid_food_show(self):
+        response = client.get('/api/v1/foods/9')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['name'], "Croissant")
+        self.assertEqual(json.loads(response.content)['calories'], 400)
+
+    # def test_valid_food_post(self):
+    #     payload = { "food": { "name": "Tomato Pound Cake", "calories": "900"} }
+    #
+    #     response = client.post('/api/v1/foods', payload, content_type='application/json')
+    #
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(json.loads(response.content)['name'], "Tomato Pound Cake")
+    #     self.assertEqual(json.loads(response.content)['calories'], 900)
+
+    def test_invalid_food_post(self):
+        payload = { "food": { "calories": "900"} }
+
+        response = client.post('/api/v1/foods', payload, format='json')
+
+        self.assertEqual(response.status_code, 400)

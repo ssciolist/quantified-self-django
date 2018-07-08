@@ -31,5 +31,10 @@ def food_show(request, food_id):
     if request.method == 'GET':
         food = model_to_dict(Food.objects.get(pk=food_id))
         return JsonResponse(food, safe=False)
-    elif request.method == 'POST':
+    elif request.method == 'PUT' or request.method == 'PATCH':
+        try:
+            return HttpResponse('placeholder')
+        except:
+            return HttpResponse('placeholder')
+    elif request.method == 'DELETE':
         return HttpResponse('placeholder')

@@ -18,10 +18,13 @@ def food_index(request):
         foods = list(Food.objects.all().values('id', 'name', 'calories'))
         return JsonResponse(foods, safe=False)
     elif request.method == 'POST':
-        food_params = json.loads(request.body)['food']
-        food = Food(name = food_params['name'], calories = food_params['calories'])
-        food.save()
-        return JsonResponse({'id':food.id, 'name':food.name, 'calories':food.calories})
+        try:
+            food_params = json.loads(request.body)['food']
+            food = Food(name = food_params['name'], calories = food_params['calories'])
+            food.save()
+            return JsonResponse({'id':food.id, 'name':food.name, 'calories':food.calories})
+        except:
+            return HttpResponse('An error occurred. No food created', status=400)
 
 
 def food_show(request, food_id):

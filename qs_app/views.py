@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 # import for error handling
 from django.shortcuts import get_object_or_404
 
-from qs_app.models import Food
+from qs_app.models import Food, Meal
 
 @csrf_exempt
 def food_index(request):

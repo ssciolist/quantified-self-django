@@ -49,3 +49,7 @@ def food_show(request, food_id):
         food = get_object_or_404(Food, pk=food_id)
         food.delete()
         return HttpResponse(status=204)
+
+def meal_index(request):
+    meals = list(Meal.objects.all().values('id', 'name', 'foods'))
+    return JsonResponse(meals, safe=False)

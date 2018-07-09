@@ -23,7 +23,7 @@ def food_index(request):
     elif request.method == 'POST':
         try:
             food_attrs = json.loads(request.body)['food']
-            food = Food(name = food_params['name'], calories = food_params['calories'])
+            food = Food(name = food_attrs['name'], calories = food_attrs['calories'])
             food.save()
             return JsonResponse({'id':food.id, 'name':food.name, 'calories':food.calories})
         except:

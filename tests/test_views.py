@@ -77,3 +77,37 @@ class FoodViewsTestClass(TestCase):
         response = client.delete('/api/v1/foods/5/')
 
         self.assertEqual(response.status_code, 404)
+
+class MealViewsTestClass(TestCase):
+
+    def setUp(self):
+        smoothie = Food.objects.create(name='Smoothie', calories='200')
+        roll = Food.objects.create(name='Croissant', calories='400')
+        salad = Food.objects.create(name='Salad', calories='300')
+        chicken = Food.objects.create(name='Whole Roasted Chicken', calories='800')
+
+        Meal.objects.get(name="Breakfast").foods.add(smoothie)
+        Meal.objects.get(name="Lunch").foods.add(salad)
+        Meal.objects.get(name="Snack").foods.add(roll)
+        Meal.objects.get(name="Dinner").foods.add(chicken)
+
+    def test_meal_index(self):
+        response = client.get('/api/v1/meals/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)[0]['name'], 'Breakfast')
+        self.assertEqual(json.loads(response.content)[0]['foods'][0]['name'], 'Smoothie')
+        self.assertEqual(json.loads(response.content)[0]['foods'][0]['calories'], 200)
+
+    def test_valid_meal_show(self):
+        response = client.get('/api/v1/meals/1/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['name'], 'Breakfast')
+        self.assertEqual(json.loads(response.content)['foods'][0]['name'], 'Smoothie')
+        self.assertEqual(json.loads(response.content)['foods'][0]['calories'], 200)
+
+    def test_invalid_meal_show(self):
+        response = client.get('/api/v1/meals/10/')
+
+        self.assertEqual(response.status_code, 404)

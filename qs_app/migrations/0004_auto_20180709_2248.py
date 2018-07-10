@@ -2,7 +2,7 @@
 
 from django.db import migrations
 
-def load_meal_data:
+def load_meal_data(apps, schema_editor):
     Meal = apps.get_model('qs_app', 'Meal')
 
     Meal(name="Breakfast").save()

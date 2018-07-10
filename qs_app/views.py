@@ -12,8 +12,8 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 # import for error handling
 from django.shortcuts import get_object_or_404
-
 from qs_app.models import Food, Meal
+
 
 @csrf_exempt
 def food_index(request):
@@ -53,3 +53,8 @@ def food_show(request, food_id):
 def meal_index(request):
     meals = list(Meal.objects.all().values('id', 'name', 'foods'))
     return JsonResponse(meals, safe=False)
+
+def meal_show(request, meal_id):
+    meal = get_object_or_404(Meal, pk=meal_id)
+    food_list = list(meal.foods.values('id', 'name', 'calories'))
+    return JsonResponse({'id':meal.id, 'name':meal.name, 'foods':food_list})

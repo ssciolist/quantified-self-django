@@ -51,8 +51,11 @@ def food_show(request, food_id):
         return HttpResponse(status=204)
 
 def meal_index(request):
-    meals = list(Meal.objects.all().values('id', 'name', 'foods'))
-    return JsonResponse(meals, safe=False)
+    all_meals = []
+    for meal in Meal.objects.all():
+        food_list = list(meal.foods.values('id', 'name', 'calories'))
+        all_meals.append({'id':meal.id, 'name':meal.name, 'foods':food_list})
+    return JsonResponse(all_meals, safe=False)
 
 def meal_show(request, meal_id):
     meal = get_object_or_404(Meal, pk=meal_id)

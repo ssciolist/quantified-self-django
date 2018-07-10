@@ -111,3 +111,18 @@ class MealViewsTestClass(TestCase):
         response = client.get('/api/v1/meals/10/')
 
         self.assertEqual(response.status_code, 404)
+
+    def test_valid_meal_food_post(self):
+        response = client.post('/api/v1/meals/1/foods/2')
+
+        self.assertEqual(json.loads(response.content)['message'], 'Successfully added Croissant to Breakfast')
+
+    # def test_invalid_meal_food_post(self):
+    #     response = client.post('/api/v1/meals/6/foods/2')
+    #
+    #     self.assertEqual(response.status_code, 404)
+    #
+    # def test_invalid_meal_with_invalid_food_post(self):
+    #     response = client.post('/api/v1/meals/1/foods/6')
+    #
+    #     self.assertEqual(response.status_code, 404)

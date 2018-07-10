@@ -19,8 +19,6 @@ class MealTestClass(TestCase):
     def setUp(self):
         Food.objects.create(name="Croissant", calories='400')
         Food.objects.create(name="Salad", calories='300')
-        Meal.objects.create(name="Breakfast")
-        Meal.objects.create(name="Lunch")
 
     def test_meal_food_relation(self):
         roll = Food.objects.get(name="Croissant")

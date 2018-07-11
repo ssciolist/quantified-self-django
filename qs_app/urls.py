@@ -8,5 +8,5 @@ urlpatterns = [
     path('foods/<int:food_id>', views.food_show, name='food_put'),
     path('meals/', views.meal_index, name='meal_index'),
     path('meals/<int:meal_id>/', views.meal_show, name='meal_index'),
-    path('meals/<int:meal_id>/foods/<int:food_id>', views.meal_food_post, name='meal_food_post'),
+    path('meals/<int:meal_id>/foods/<int:food_id>', views.meal_food_post_delete, name='meal_food_post_delete'),
 ]

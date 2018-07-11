@@ -63,8 +63,14 @@ def meal_show(request, meal_id):
     return JsonResponse({'id':meal.id, 'name':meal.name, 'foods':food_list})
 
 @csrf_exempt
-def meal_food_post(request, meal_id, food_id):
-    meal = get_object_or_404(Meal, pk=meal_id)
-    food = get_object_or_404(Food, pk=food_id)
-    meal.foods.add(food)
-    return JsonResponse({'message': 'Successfully added {food} to {meal}'.format(food=food,meal=meal)})
+def meal_food_post_delete(request, meal_id, food_id):
+    if request.method == 'POST':
+        meal = get_object_or_404(Meal, pk=meal_id)
+        food = get_object_or_404(Food, pk=food_id)
+        meal.foods.add(food)
+        return JsonResponse({'message': 'Successfully added {food} to {meal}'.format(food=food,meal=meal)})
+    if request.method == 'DELETE':
+        meal = get_object_or_404(Meal, pk=meal_id)
+        food = get_object_or_404(Food, pk=food_id)
+        meal.foods.remove(food)
+        return JsonResponse({'message': 'Successfully removed {food} from {meal}'.format(food=food,meal=meal)})

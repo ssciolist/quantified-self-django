@@ -137,7 +137,7 @@ class MealViewsTestClass(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-    def test_invalid_meal_with_invalid_food_post(self):
+    def test_invalid_meal_with_invalid_food_delete(self):
         response = client.delete('/api/v1/meals/1/foods/6')
 
         self.assertEqual(response.status_code, 404)

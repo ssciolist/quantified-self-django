@@ -62,6 +62,7 @@ def meal_show(request, meal_id):
     food_list = list(meal.foods.values('id', 'name', 'calories'))
     return JsonResponse({'id':meal.id, 'name':meal.name, 'foods':food_list})
 
+@csrf_exempt
 def meal_food_post(request, meal_id, food_id):
     meal = get_object_or_404(Meal, pk=meal_id)
     food = get_object_or_404(Food, pk=food_id)
